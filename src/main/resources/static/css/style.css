@@ -1,0 +1,19 @@
+#hero {
+    background-image: url(../images/book.jpg);
+    background-position: center;
+    min-height: 600px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.word {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 180px;
+    align-content: center;
+    padding: 80px 250px;
+    color: white;
+    flex-direction: column;
+}
+
