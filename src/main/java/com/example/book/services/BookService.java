@@ -10,7 +10,12 @@ public interface BookService {
 
     public List <Book> getAllBook();
 
+    Book getBook (long id);
+
+    public List<Book> searchBooksByName(String name);
+
     public  void deleteBook(long id);
 
 
+    void updateBook(Book book);
 }

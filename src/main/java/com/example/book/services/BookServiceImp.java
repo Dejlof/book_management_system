@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookServiceImp implements BookService {
@@ -30,8 +31,38 @@ public class BookServiceImp implements BookService {
     }
 
     @Override
+    public Book getBook(long id) {
+        Optional<Book> optionalBook;
+        optionalBook= bookRepository.findById(id);
+        if(optionalBook.isPresent()){
+            Book book = optionalBook.get();
+            return book;
+        }
+        return null;
+    }
+
+    @Override
+    public List<Book> searchBooksByName(String name) {
+        return bookRepository.findByNameContainingIgnoreCase(name);
+    }
+
+
+    @Override
     public void deleteBook(long id) {
         bookRepository.deleteById(id);
+    }
 
+    @Override
+    public void updateBook(Book book) {
+        bookRepository.save(book);
     }
 }
+
+
+
+
+
+
+
+
+

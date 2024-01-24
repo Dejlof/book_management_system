@@ -4,18 +4,17 @@ import com.example.book.entity.Book;
 import com.example.book.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "/Book")
 public class BookControllers {
-    @Autowired
+
+  @Autowired
     private BookService bookService;
     @RequestMapping(value = "", method = RequestMethod.GET)
     public ModelAndView home(){
@@ -43,6 +42,35 @@ public class BookControllers {
         return modelAndView;
     };
 
+    @RequestMapping(value = "/View", method = RequestMethod.GET)
+    public ModelAndView view (@RequestParam(value = "id")long id){
+        ModelAndView modelAndView = new ModelAndView();
+        Book book = bookService.getBook(id);
+        modelAndView.addObject("book", book);
+        modelAndView.setViewName("book/view");
+        return modelAndView;
+    }
+@RequestMapping(value = "/Edit{id}", method = RequestMethod.GET)
+    public ModelAndView edit (@RequestParam(value = "id")long id) {
+        ModelAndView modelAndView = new ModelAndView();
+       Book book = bookService.getBook(id);
+       modelAndView.setViewName("book/edit");
+       modelAndView.addObject("book", book);
+      return modelAndView;
+
+    };
+
+    @RequestMapping(value = "/Update/{id}", method = RequestMethod.POST)
+    public ModelAndView update(Book book,
+                               @PathVariable(value = "id") long id)
+    {
+        ModelAndView modelAndView = new ModelAndView();
+        book.setId(id);
+        bookService.updateBook(book);
+        modelAndView.addObject("books", bookService.getBook(id));
+        modelAndView.setViewName("book/view");
+        return modelAndView;
+    }
     @RequestMapping(value = "/Available_Books", method = RequestMethod.GET)
     public ModelAndView availablebooks(){
         ModelAndView modelAndView = new ModelAndView();
@@ -52,7 +80,39 @@ public class BookControllers {
         return modelAndView;
 
     }
+    @RequestMapping(value = "/Delete", method = RequestMethod.GET)
+    public ModelAndView delete (@RequestParam(value = "id")long id){
+        ModelAndView modelAndView = new ModelAndView();
+        bookService.deleteBook(id);
+        modelAndView.addObject("books", bookService.getAllBook());
+        modelAndView.setViewName("book/availablebooks");
+        return modelAndView;
+    };
+
+    @RequestMapping(value = "/My_Books", method = RequestMethod.GET)
+    public ModelAndView mybooks () {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("book/mybooks");
+        return modelAndView;
+    };
+
+
+    @RequestMapping(value = "/Searched_Books", method = RequestMethod.POST)
+    public ModelAndView searchedbooks (@RequestParam(value = "name") String name) {
+        ModelAndView modelAndView = new ModelAndView();
+
+        List<Book> matchingBooks = bookService.searchBooksByName(name);
+
+        modelAndView.addObject("books", matchingBooks);
+        modelAndView.setViewName("book/search-results");
+
+        return modelAndView;
+        };
+
+
+    }
 
 
 
-}
+
+

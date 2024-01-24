@@ -35,19 +35,19 @@
 </nav>
 <!--End of Navigation !-->
 <div class="container my-5">
-        <h2 class="text-center p-3">Register Book Information</h2>
-    <form th:action="@{/Book/Create}"  method="post">
+    <h2 class="text-center p-3">Edit Book Information</h2>
+    <form th:action="@{/Book/Update/{id}(id = ${book.id})}" method="post" th:object="${book}">
         <div class="mb-3 mt-3">
-            <label for="name" class="form-label">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Enter your Name" name="name">
+            <label class="form-label">Name:</label>
+            <input type="text" class="form-control"  placeholder="Enter your Name" name="name" th:value ="${book.name}">
         </div>
         <div class="mb-3">
-            <label for="title" class="form-label">Title:</label>
-            <input type="text" class="form-control" id="title" placeholder="Enter Title" name="title">
+            <label class="form-label">Title:</label>
+            <input type="text" class="form-control" placeholder="Enter Title" name="title" th:value ="${book.title}">
         </div>
         <div class="mb-3">
-            <label for="title" class="form-label">Author:</label>
-            <input type="text" class="form-control" id="author" placeholder="Enter Author" name="author">
+            <label class="form-label">Author:</label>
+            <input type="text" class="form-control" placeholder="Enter Author" name="author" th:value ="${book.author}">
         </div>
 
         <button type="submit" class="btn btn-dark">Submit</button>
