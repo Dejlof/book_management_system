@@ -36,8 +36,9 @@
 <!--End of Navigation !-->
 
 
-<div class="container my-5">
+<div class="container my-5 text-center">
     <h2 class="text-center p-3">Enter Your Name : </h2>
+    <h6 class="text-center text-danger" th:text="${noInput}"></h6>
     <form th:action="@{/Book/Searched_Books}"  method="post">
         <div class="mb-3 mt-3">
             <input type="text" class="form-control" id="name" placeholder="Enter your Name" name="name" >

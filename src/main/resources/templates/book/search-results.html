@@ -49,6 +49,7 @@
                 <th>Name</th>
                 <th>Title</th>
                 <th>Author</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -57,13 +58,16 @@
                 <td th:text="${book.name}"></td>
                 <td th:text="${book.title}"></td>
                 <td th:text="${book.author}"></td>
+                <td><a th:href="@{/Book/View(id=${book.id})}" class="view"><i class="fa-regular fa-eye" style="color: yellow"></i></a> |
+                    <a  th:href="@{/Book/Edit(id=${book.id})}"><i class="fa-regular fa-pen-to-square"></i></a> |
+                    <a th:href="@{/Book/Delete(id=${book.id})}" class="delete"><i class="fa-solid fa-trash" style="color: red"></i></a></td>
             </tr>
             </tbody>
         </table>
     </div>
 
     <div th:if="${books == null or #lists.isEmpty(books)}">
-        <p>No matching books found.</p>
+        <h2>No matching books found.</h2>
     </div>
 </div>
 

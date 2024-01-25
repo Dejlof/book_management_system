@@ -28,7 +28,6 @@ public class BookControllers {
     public ModelAndView register(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("book/register");
-        modelAndView.addObject("message", "I Love You");
         return modelAndView;
 
     }
@@ -36,10 +35,16 @@ public class BookControllers {
     @RequestMapping(value = "/Create", method = RequestMethod.POST)
     public ModelAndView create(@RequestParam (value = "name") String name, @RequestParam(value = "title") String title, @RequestParam(value = "author") String author){
         ModelAndView modelAndView = new ModelAndView();
-        bookService.createBook(name, title, author);
-        modelAndView.addObject("books", bookService.getAllBook());
-        modelAndView.setViewName("book/availablebooks");
-        return modelAndView;
+        if(name.length() != 0 && title.length() !=0 && author.length() != 0){
+            bookService.createBook(name, title, author);
+            modelAndView.addObject("books", bookService.getAllBook());
+            modelAndView.setViewName("book/availablebooks");
+            return modelAndView;}
+        else {
+            modelAndView.addObject("message", "Fields not completed");
+            modelAndView.setViewName("book/register");
+            return modelAndView;
+        }
     };
 
     @RequestMapping(value = "/View", method = RequestMethod.GET)
@@ -100,13 +105,17 @@ public class BookControllers {
     @RequestMapping(value = "/Searched_Books", method = RequestMethod.POST)
     public ModelAndView searchedbooks (@RequestParam(value = "name") String name) {
         ModelAndView modelAndView = new ModelAndView();
+if(name.length() != 0){
+    List<Book> matchingBooks = bookService.searchBooksByName(name);
+    modelAndView.addObject("books", matchingBooks);
+    modelAndView.setViewName("book/search-results");
+    return modelAndView;}
+else{
+    modelAndView.addObject("noInput", "Input Your Name!!");
+    modelAndView.setViewName("book/mybooks");
+    return modelAndView;
+}
 
-        List<Book> matchingBooks = bookService.searchBooksByName(name);
-
-        modelAndView.addObject("books", matchingBooks);
-        modelAndView.setViewName("book/search-results");
-
-        return modelAndView;
         };
 
 

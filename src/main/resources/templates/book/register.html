@@ -37,6 +37,7 @@
 <div class="container my-5">
         <h2 class="text-center p-3">Register Book Information</h2>
     <form th:action="@{/Book/Create}"  method="post">
+        <h6 class="text-center text-danger" th:text="${message}"></h6>
         <div class="mb-3 mt-3">
             <label for="name" class="form-label">Name:</label>
             <input type="text" class="form-control" id="name" placeholder="Enter your Name" name="name">
